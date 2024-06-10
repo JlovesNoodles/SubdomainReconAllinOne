@@ -1,47 +1,20 @@
 #!/bin/bash
 
-# Update package lists
-echo "Updating package lists..."
-sudo apt-get update
+# Function to install necessary dependencies
+function install_dependencies() {
+    sudo apt-get update
+    sudo apt-get install -y wget curl jq python3 pv lolcat cowsay
+    go get -u github.com/tomnomnom/assetfinder
+    GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+    go get -u github.com/tomnomnom/httprobe
+    git clone https://github.com/aboul3la/Sublist3r.git /opt/Sublist3r
+}
 
-# Install cowsay
-echo "Installing cowsay..."
-sudo apt-get install -y cowsay
-
-# Install lolcat
-echo "Installing lolcat..."
-sudo gem install lolcat
-
-# Install amass
-echo "Installing amass..."
-sudo snap install amass
-
-# Install subfinder
-echo "Installing subfinder..."
-GO111MODULE=on go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
-
-# Install assetfinder
-echo "Installing assetfinder..."
-go get -u github.com/tomnomnom/assetfinder
-
-# Install curl
-echo "Installing curl..."
-sudo apt-get install -y curl
-
-# Install jq
-echo "Installing jq..."
-sudo apt-get install -y jq
-
-# Install pv
-echo "Installing pv..."
-sudo apt-get install -y pv
-
-# Install httpx
-echo "Installing httpx..."
-GO111MODULE=on go get -v github.com/projectdiscovery/httpx/cmd/httpx
-
-# Install httprobe
-echo "Installing httprobe..."
-go get -u github.com/tomnomnom/httprobe
-
-echo "All required tools have been installed."
+# Check if dependencies are installed
+if ! command -v cowsay &>/dev/null || ! command -v jq &>/dev/null || ! command -v python3 &>/dev/null || ! command -v pv &>/dev/null || ! command -v lolcat &>/dev/null || ! command -v go &>/dev/null; then
+    echo "Some dependencies are missing. Installing..."
+    install_dependencies
+    echo "Dependencies installed successfully!"
+else
+    echo "All dependencies are already installed."
+fi
