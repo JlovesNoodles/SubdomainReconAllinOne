@@ -17,7 +17,7 @@ fi
 function subdomainrecon(){
 	cowsay "Subdomain Recon Starting Now. Please Wait!!!"
 	assetfinder --subs-only $url >> $url/subdomain/assetfinder.subdomain.$url.txt
-	subfinder -silent -d $url -o $url/subdomain/subfinder.subdomain.$url.txt
+	#subfinder -silent -d $url -o $url/subdomain/subfinder.subdomain.$url.txt
 	python3 /opt/Sublist3r/sublist3r.py -d $url >> $url/subdomain/sublister.subdomain.$url.txt
 	curl -s https://crt.sh/\?q\=%25.$url\&output\=json | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u >> $url/subdomain/crt.subdomain.$url.txt
 	
@@ -73,11 +73,32 @@ function contentdiscovery(){
 	if [[ $content == "Y" || $content == "y" ]]; then
 	/root/go/bin/httpx -status-code -title -tech-detect -list $url/subdomain/alivesubdomains.txt
 	else
-	cowsay -f dragon "Thank You Happy Hacking"
+	echo " " 
+	echo " " 
+	echo " " 
+	echo "Aight understandable have a good day" | lolcat
+	echo " " 
+	echo " " 
+	echo " " 
 	fi
 
 
 }
-
 contentdiscovery
+
+function subtakeover(){
+	cowsay "Do you want to test for subdomain takeovers?"
+	echo "++++++++[Y]es or [N]o++++++++"
+	read subtakoever
+	if [[ $subtakoever == "Y" || $subtakoever == "y" ]]; then
+	subjack -w $url/subdomain/alivesubdomains.txt -v 
+	else
+	cowsay -f dragon "Thank You Happy Hacking"
+	fi
+
+
+
+}
+subtakeover
+
 
