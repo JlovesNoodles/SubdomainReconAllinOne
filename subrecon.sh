@@ -26,8 +26,8 @@ fi
 function subdomainrecon(){
 	cowsay "Subdomain Recon Starting Now. Please Wait!!!"
 	assetfinder --subs-only $url >> $url/subdomain/assetfinder.subdomain.$url.txt
-	#subfinder -silent -d $url -o $url/subdomain/subfinder.subdomain.$url.txt
-	python3 /opt/Sublist3r/sublist3r.py -d $url >> $url/subdomain/sublister.subdomain.$url.txt
+	subfinder -silent -d $url -o $url/subdomain/subfinder.subdomain.$url.txt
+	sublist3r -d $url >> $url/subdomain/sublister.subdomain.$url.txt
 	curl -s https://crt.sh/\?q\=%25.$url\&output\=json | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u >> $url/subdomain/crt.subdomain.$url.txt
 	
 	cat $url/subdomain/assetfinder.subdomain.$url.txt $url/subdomain/subfinder.subdomain.$url.txt $url/subdomain/crt.subdomain.$url.txt $url/subdomain/sublister.subdomain.$url.txt >> $url/subdomain/complete.txt
