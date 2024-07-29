@@ -83,6 +83,7 @@ function contentdiscovery() {
 		read content
 		if [[ $content == "Y" || $content == "y" ]]; then
 			/root/go/bin/httpx -status-code -title -tech-detect -list $url/subdomain/alivesubdomains.txt
+			break
 		elif [[ $content == "N" || $content == "n" ]]; then
 
 			echo " "
@@ -108,6 +109,7 @@ function subtakeover() {
         read subtakeover
         if [[ $subtakeover == "Y" || $subtakeover == "y" ]]; then
             subjack -w $url/subdomain/alivesubdomains.txt -v
+	    break
         elif [[ $subtakeover == "N" || $subtakeover == "n" ]]; then
             echo " "
             echo "Aight Understandable have a good day" | lolcat
@@ -183,14 +185,15 @@ function gauresults(){
 	while true; do
 	echo " "
 	echo " "
-	echo " "
-	echo "[+] Getting URL's using GAU (.php .asa .inc .sql .zip .tar .pdf .txt Extenstions Only)" | lolcat
+	echo " We are now scanning the below!"
+	echo "[+] Getting URL's using GAU (.php .asa .inc .sql .zip .tar .pdf .txt Extenstions Only)"  | lolcat
+	echo " [Y]es [N]o"
 	read gauchoice
 
 
-	 if [[ gauchoice == "Y" || gauchoice == "y" ]]; then
+	 if [[ $gauchoice == "Y" || $gauchoice == "y" ]]; then
 
-            /root/bin/gau --fc 404,302 $url | grep ".php" >> $url/gau/$url.PHP_extentionurl.txt
+			/root/bin/gau --fc 404,302 $url | grep ".php" >> $url/gau/$url.PHP_extentionurl.txt
 			/root/bin/gau --fc 404,302 $url | grep ".asa" >> $url/gau/$url.ASA_extentionurl.txt
 			/root/bin/gau --fc 404,302 $url | grep ".inc" >> $url/gau/$url.INC_extentionurl.txt
 			/root/bin/gau --fc 404,302 $url | grep ".sql" >> $url/gau/$url.SQL_extentionurl.txt
@@ -198,8 +201,8 @@ function gauresults(){
 			/root/bin/gau --fc 404,302 $url | grep ".tar" >> $url/gau/$url.TAR_extentionurl.txt
 			/root/bin/gau --fc 404,302 $url | grep ".pdf" >> $url/gau/$url.PDF_extentionurl.txt
 			/root/bin/gau --fc 404,302 $url | grep ".txt" >> $url/gau/$url.TXT_extentionurl.txt
-
-        elif [[ gauchoice == "N" || gauchoice == "n" ]]; then
+			break
+        elif [[ $gauchoice == "N" || $gauchoice == "n" ]]; then
             echo " "
             echo "Aight, understandable have a good day" | lolcat
             break
@@ -209,9 +212,6 @@ function gauresults(){
 			continue
 	fi
 done
-
-
-
 
 }
 gauresults
@@ -224,4 +224,5 @@ echo " "
 echo " " 
 echo " "
 cowsay -f dragon "Thank You Happy Hacking" | lolcat
+
 
