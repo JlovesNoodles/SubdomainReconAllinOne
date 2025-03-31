@@ -21,6 +21,10 @@ if [ ! -d "$url/gau" ];then
 	mkdir $url/gau
 fi
 
+if [ ! -d "$url/photon" ];then
+	mkdir $url/photon
+fi
+
 
 
 function subdomainrecon(){
@@ -193,14 +197,14 @@ function gauresults(){
 
 	 if [[ $gauchoice == "Y" || $gauchoice == "y" ]]; then
 
-			/root/bin/gau --fc 404,302 $url | grep ".php" >> $url/gau/$url.PHP_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".asa" >> $url/gau/$url.ASA_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".inc" >> $url/gau/$url.INC_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".sql" >> $url/gau/$url.SQL_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".zip" >> $url/gau/$url.ZIP_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".tar" >> $url/gau/$url.TAR_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".pdf" >> $url/gau/$url.PDF_extentionurl.txt
-			/root/bin/gau --fc 404,302 $url | grep ".txt" >> $url/gau/$url.TXT_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".php" >> $url/gau/$url.PHP_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".asa" >> $url/gau/$url.ASA_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".inc" >> $url/gau/$url.INC_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".sql" >> $url/gau/$url.SQL_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".zip" >> $url/gau/$url.ZIP_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".tar" >> $url/gau/$url.TAR_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".pdf" >> $url/gau/$url.PDF_extentionurl.txt
+			/root/go/bin/gau  --fc 404,302 $url | grep ".txt" >> $url/gau/$url.TXT_extentionurl.txt
 			break
         elif [[ $gauchoice == "N" || $gauchoice == "n" ]]; then
             echo " "
@@ -217,6 +221,36 @@ done
 gauresults
 
 
+function photonchoice(){
+	while true; do
+	echo " "
+	echo " "
+	echo " Do you wanna perform Data Dig Extration Something like that?" | lolcat
+	echo " [Y]es [N]o"
+	read photonchoice
+	
+	
+	if [[ $photonchoice == "Y" || $photonchoice == "y" ]]; then
+
+			photon --url $url --keys --only-urls -l 3 -t 100 --wayback 
+			mv $url/*.txt $url/photon
+			break
+        elif [[ $photonchoice == "N" || $photonchoice == "n" ]]; then
+            echo " "
+            echo "Aight, understandable have a good day" | lolcat
+            break
+        else
+            echo "Bruh Really? Please enter 'Y' or 'N'."
+            echo " "
+			continue
+	fi	
+		
+	
+
+done
+
+}
+photonchoice
 
 
 
@@ -224,5 +258,4 @@ echo " "
 echo " " 
 echo " "
 cowsay -f dragon "Thank You Happy Hacking" | lolcat
-
 
